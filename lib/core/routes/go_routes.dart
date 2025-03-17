@@ -1,0 +1,108 @@
+import 'package:alerto_emergency_response_app/core/routes/transition_routes.dart';
+import 'package:alerto_emergency_response_app/features/rescuer/view/authentication/forget_page.dart';
+import 'package:alerto_emergency_response_app/features/rescuer/view/authentication/login_page.dart';
+import 'package:alerto_emergency_response_app/features/rescuer/view/authentication/register_page.dart';
+import 'package:alerto_emergency_response_app/features/splash/view/splash.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../features/rescuer/view/authentication/profile_page.dart';
+import '../../features/user/view/emergency_help/emergency_request_page.dart';
+import '../../features/user/view/main_page.dart';
+import 'error_routes.dart';
+
+class AppRoutes {
+  static final router = GoRouter(
+    routes: [
+      GoRoute(
+        name: AppRoute.errorPage,
+        path: '/error-page',
+        pageBuilder: (context, state) => buildPageWithFadeTransition<void>(
+          context: context,
+          state: state,
+          child: const ErrorPage(),
+        ),
+      ),
+      GoRoute(
+        name: AppRoute.splashPage,
+        path: '/',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const SplashPage(),
+        ),
+      ),
+      GoRoute(
+        name: AppRoute.mainPage,
+        path: '/mainPage',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const MainPage(),
+        ),
+      ),
+      GoRoute(
+        name: AppRoute.emergencyRequestPage,
+        path: '/emergency-request',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const EmergencyRequestPage(),
+        ),
+      ),
+
+      ///Rescuer  Routes
+
+      GoRoute(
+        name: AppRoute.loginPage,
+        path: '/login',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const LoginPage(),
+        ),
+      ),
+      GoRoute(
+        name: AppRoute.registerPage,
+        path: '/register',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const RegisterPage(),
+        ),
+      ),
+      GoRoute(
+        name: AppRoute.profilePage,
+        path: '/profile',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const ProfilePage(),
+        ),
+      ),
+      GoRoute(
+        name: AppRoute.forgetPage,
+        path: '/forget',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const ForgetPage(),
+        ),
+      ),
+    ],
+    errorPageBuilder: (context, state) {
+      return const MaterialPage(child: ErrorPage());
+    },
+  );
+}
+
+class AppRoute {
+  static const String errorPage = 'error-page';
+  static const String splashPage = 'splash-page';
+  static const String registerPage = 'register-page';
+  static const String loginPage = 'login-page';
+  static const String profilePage = 'profile-page';
+  static const String forgetPage = 'forget-page';
+  ///User
+  static const String mainPage = 'main-page';
+  static const String emergencyRequestPage = 'emergencyRequest-page';
+}
