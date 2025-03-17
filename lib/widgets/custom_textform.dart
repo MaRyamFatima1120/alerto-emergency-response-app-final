@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final IconButton? suffixIcon;
+  final int? maxLine;
 
   //constructor with named parameter
   const CustomTextFormField(
@@ -17,7 +18,7 @@ class CustomTextFormField extends StatelessWidget {
       this.hintText,
       this.obscureText = false,
       this.validator,
-      this.suffixIcon});
+      this.suffixIcon, this.maxLine});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class CustomTextFormField extends StatelessWidget {
         keyboardType: keyboard,
         validator: validator,
         obscureText: obscureText,
+        maxLines: maxLine,
         //cursorHeight: 30,
         decoration: InputDecoration(
             hintText: hintText,

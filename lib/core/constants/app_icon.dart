@@ -8,4 +8,5 @@ class AppIcon {
   static const carIcon ="assets/icons/car.svg";
   static const medicalIcon ="assets/icons/medical.svg";
   static const robberyIcon ="assets/icons/robbery.svg";
+  static const editIcon="assets/icons/edit.svg";
 }

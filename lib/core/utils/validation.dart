@@ -31,9 +31,20 @@ String? validatePassword(String? password) {
   }
   return null;
 }
-String? validateUsername(String? value){
-  if(value == null || value.isEmpty){
+
+String? validateUsername(String? value) {
+  if (value == null || value.isEmpty) {
     return "Please Enter Username.";
+  }
+  return null;
+}
+
+String? phoneValidate(String? value) {
+  if (value == null || value.isEmpty) {
+    return "Phone number is required";
+  }
+  if (!RegExp(r'^(03[0-9]{9})$').hasMatch(value)) {
+    return "Enter a valid Pakistani number (e.g., 03001234567)";
   }
   return null;
 }

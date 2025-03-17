@@ -3,7 +3,7 @@ import 'package:alerto_emergency_response_app/features/user/provider/main_page_p
 import 'package:alerto_emergency_response_app/features/user/view/emergency_page.dart';
 import 'package:alerto_emergency_response_app/features/user/view/track_rescuer_page.dart';
 import 'package:alerto_emergency_response_app/features/user/view/home_page.dart';
-import 'package:alerto_emergency_response_app/features/user/view/message_page.dart';
+import 'package:alerto_emergency_response_app/features/user/view/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/app_icon.dart';

@@ -6,7 +6,9 @@ import 'package:alerto_emergency_response_app/features/splash/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/rescuer/view/authentication/profile_page.dart';
+import '../../features/user/view/emergency_help/emergency_request_help_step2.dart';
 import '../../features/user/view/emergency_help/emergency_request_page.dart';
+import '../../features/user/view/emergency_help/waiting_for_rescuer_page.dart';
 import '../../features/user/view/main_page.dart';
 import 'error_routes.dart';
 
@@ -48,6 +50,30 @@ class AppRoutes {
           state: state,
           child: const EmergencyRequestPage(),
         ),
+      ),
+      GoRoute(
+        name: AppRoute.emergencyRequestHelpPage,
+        path: '/emergencyRequest-help',
+
+        pageBuilder: (context, state) {
+          final emergencyType =state.extra as String? ?? 'Unknown Type';
+          return buildPageWithDefaultTransition<void>(
+            context: context,
+            state: state,
+            child:  EmergencyRequestHelpStep2(emergencyType: emergencyType,),
+          );
+        }
+      ),
+      GoRoute(
+          name: AppRoute.waitingForRescuerPage,
+          path: '/waitingRescuer_response',
+          pageBuilder: (context, state) {
+            return buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child:  WaitingForRescuerPage(),
+            );
+          }
       ),
 
       ///Rescuer  Routes
@@ -105,4 +131,6 @@ class AppRoute {
   ///User
   static const String mainPage = 'main-page';
   static const String emergencyRequestPage = 'emergencyRequest-page';
+  static const String emergencyRequestHelpPage = 'emergencyRequest-help';
+  static const String waitingForRescuerPage = 'waitingRescuer_response';
 }

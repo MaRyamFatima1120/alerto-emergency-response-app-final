@@ -1,8 +1,12 @@
 import 'package:alerto_emergency_response_app/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/constants/app_icon.dart';
+import '../../../../core/routes/go_routes.dart';
 import '../../../../core/utils/global_variable.dart';
+import '../../provider/emergency_request_provider.dart';
 
 class EmergencyRequestPage extends StatefulWidget {
   const EmergencyRequestPage({super.key});
@@ -37,6 +41,7 @@ class _EmergencyRequestPageState extends State<EmergencyRequestPage> {
 
   @override
   Widget build(BuildContext context) {
+    final emergencyProvider = Provider.of<EmergencyRequestProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -50,20 +55,17 @@ class _EmergencyRequestPageState extends State<EmergencyRequestPage> {
         padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
         child: Column(
           children: [
-            SizedBox(
-              height: 15,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Select Emergency Type",
-                    style: textTheme(context).bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w500
-                    )),
+                    style: textTheme(context)
+                        .bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w500)),
                 TextButton(
                   onPressed: () {},
                   child: Text(
-                    "Steps 1/3",
+                    "Steps 1/2",
                     style: textTheme(context).titleLarge?.copyWith(
                           color: colorScheme(context).primary,
                         ),
@@ -71,32 +73,51 @@ class _EmergencyRequestPageState extends State<EmergencyRequestPage> {
                 ),
               ],
             ),
-            GridView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8.0,
-                  mainAxisSpacing: 8.0,
-                ),
-                itemCount: emergencyType.length,
-                itemBuilder: (context, index) {
-                  final requestType = emergencyType[index];
-                  return EmergencyCard(
-                    title: requestType['title'],
-                    iconPath: requestType['icon'],
+            GestureDetector(
+              onTap: () {},
+              child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                  ),
+                  itemCount: emergencyType.length,
+                  itemBuilder: (context, index) {
+                    final requestType = emergencyType[index];
+                    final isSelected = emergencyProvider.selectedEmergency ==
+                        requestType['title'];
 
-                    /*onTap: (){
-                    print("onTap");
-                  },*/
+                    return GestureDetector(
+                      onTap: () {
+                        //store title
+                        emergencyProvider
+                            .selectEmergency(requestType['title']!);
+                        print(requestType['title']);
+                      },
+                      child: EmergencyCard(
+                        title: requestType['title'],
+                        iconPath: requestType['icon'],
+                        isSelected: isSelected,
 
-                  );
-                }),
+                        /*onTap: (){
+                        print("onTap");
+                      },*/
+                      ),
+                    );
+                  }),
+            ),
             SizedBox(
               height: 15,
             ),
             CustomButton(
-              pressed: () {},
+              pressed: () {
+                GoRouter.of(context).pushNamed(
+                  AppRoute.emergencyRequestHelpPage,
+                  extra: emergencyProvider.selectedEmergency,
+                );
+              },
               width: double.infinity,
               height: 60,
               bgColor: colorScheme(context).primary,
@@ -112,18 +133,24 @@ class _EmergencyRequestPageState extends State<EmergencyRequestPage> {
 class EmergencyCard extends StatelessWidget {
   final String title;
   final String iconPath;
+  final bool isSelected;
 
-  const EmergencyCard({super.key, required this.title, required this.iconPath});
+  const EmergencyCard(
+      {super.key,
+      required this.title,
+      required this.iconPath,
+      required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: colorScheme(context).surface,
+      color: isSelected
+          ? colorScheme(context).primary
+          : colorScheme(context).surface,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
         child: SizedBox(
           height: 130,
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,10 +158,12 @@ class EmergencyCard extends StatelessWidget {
               // Icon
               SvgPicture.asset(
                 iconPath, // SVG Path
-                width:40,
+                width: 40,
                 height: 40,
                 colorFilter: ColorFilter.mode(
-                  colorScheme(context).primary,
+                  isSelected
+                      ? colorScheme(context).surface
+                      : colorScheme(context).primary,
                   BlendMode.srcIn,
                 ),
               ),
@@ -143,8 +172,11 @@ class EmergencyCard extends StatelessWidget {
                 title,
                 textAlign: TextAlign.center,
                 style: textTheme(context).bodyMedium?.copyWith(
-                    color:
-                    colorScheme(context).onSurface.withValues(alpha: 0.8)),
+                    color: isSelected
+                        ? colorScheme(context).surface
+                        : colorScheme(context)
+                            .onSurface
+                            .withValues(alpha: 0.8)),
               ),
             ],
           ),
