@@ -2,7 +2,9 @@ import 'package:alerto_emergency_response_app/core/constants/app_icon.dart';
 import 'package:alerto_emergency_response_app/core/constants/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/utils/global_variable.dart';
+import '../../../../widgets/custom_list_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,6 +14,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final List<Map<String, dynamic>> profileData = [
+    {
+      'title': 'Personal Info',
+      "icon": AppIcon.userIcon,
+    },
+    {
+      'title': 'Personal Info',
+      "icon": AppIcon.userIcon,
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,13 +66,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: CircleAvatar(
                           radius: 20,
                           backgroundColor: Colors.white,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              AppIcon.editIcon,
-                              width: 16,
-                              height: 16,
-                            ),
+                          child: SvgPicture.asset(
+                            AppIcon.editIcon,
+                            width: 16,
+                            height: 16,
                           ),
                         )),
                   ],
@@ -88,9 +98,46 @@ class _ProfilePageState extends State<ProfilePage> {
                   "smithjames123@gmail.com",
                   style: textTheme(context).bodyLarge,
                 ),
-
                 SizedBox(
-                  height: 20,
+                  height: 25,
+                ),
+                CustomListTileWidget(
+                  title: 'Personal Info',
+                  svgIcon: AppIcon.userIcon,
+                  onTap: () {
+                    context.push("/personalInfo-page");
+                  },
+                  rightIcon: AppIcon.rightArrowIcon,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomListTileWidget(
+                  title: 'Settings',
+                  svgIcon: AppIcon.settingIcon,
+                  onTap: () {},
+                  rightIcon: AppIcon.rightArrowIcon,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomListTileWidget(
+                  title: 'Rescuer Reviews',
+                  svgIcon: AppIcon.commandIcon,
+                  onTap: () {},
+                  rightIcon: AppIcon.rightArrowIcon,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomListTileWidget(
+                  title: 'Log Out',
+                  svgIcon: AppIcon.downloadIcon,
+                  onTap: () {},
+                  rightIcon: AppIcon.rightArrowIcon,
+                ),
+                SizedBox(
+                  height: 25,
                 ),
               ],
             )));

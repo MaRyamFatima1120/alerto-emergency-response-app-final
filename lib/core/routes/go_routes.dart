@@ -3,6 +3,7 @@ import 'package:alerto_emergency_response_app/features/rescuer/view/authenticati
 import 'package:alerto_emergency_response_app/features/rescuer/view/authentication/login_page.dart';
 import 'package:alerto_emergency_response_app/features/rescuer/view/authentication/register_page.dart';
 import 'package:alerto_emergency_response_app/features/splash/view/splash.dart';
+import 'package:alerto_emergency_response_app/features/user/view/profile/personal_info.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/rescuer/view/authentication/profile_page.dart';
@@ -76,6 +77,20 @@ class AppRoutes {
           }
       ),
 
+      GoRoute(
+          name: AppRoute.personalInfoPage,
+          path: '/personalInfo-page',
+          pageBuilder: (context, state) {
+            return buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child:  PersonalInfo(),
+            );
+          }
+      ),
+
+
+
       ///Rescuer  Routes
 
       GoRoute(
@@ -133,4 +148,5 @@ class AppRoute {
   static const String emergencyRequestPage = 'emergencyRequest-page';
   static const String emergencyRequestHelpPage = 'emergencyRequest-help';
   static const String waitingForRescuerPage = 'waitingRescuer_response';
+  static const String personalInfoPage = 'personalInfo-page';
 }

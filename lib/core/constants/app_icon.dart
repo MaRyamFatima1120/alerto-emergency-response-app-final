@@ -9,4 +9,12 @@ class AppIcon {
   static const medicalIcon ="assets/icons/medical.svg";
   static const robberyIcon ="assets/icons/robbery.svg";
   static const editIcon="assets/icons/edit.svg";
+  static const rightArrowIcon="assets/icons/right_arrow.svg";
+  static const commandIcon="assets/icons/command.svg";
+  static const downloadIcon="assets/icons/download.svg";
+  static const settingIcon="assets/icons/set.svg";
+  static const userIcon="assets/icons/user.svg";
+  static const cnicIcon="assets/icons/cnic.svg";
+  static const callIcon="assets/icons/call.svg";
+
 }

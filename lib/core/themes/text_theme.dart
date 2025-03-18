@@ -27,17 +27,17 @@ class AppTextTheme {
     labelLarge: GoogleFonts.inter(
       fontSize: 16,
       fontWeight: FontWeight.bold,
-      color: onPrimary, // White text for buttons
+      color: onPrimary,
     ),
     titleSmall: GoogleFonts.inter(
       fontSize: 12,
       fontWeight: FontWeight.normal,
-      color: error, // White text for buttons
+      color: error,
     ),
     labelMedium: GoogleFonts.inter(
       fontSize: 12,
       fontWeight: FontWeight.w500,
-      color: onSurface, // White text for buttons
+      color: onSurface,
     ),
   );
 
