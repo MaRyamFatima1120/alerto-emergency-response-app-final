@@ -11,6 +11,7 @@ import '../../features/user/view/emergency_help/emergency_request_help_step2.dar
 import '../../features/user/view/emergency_help/emergency_request_page.dart';
 import '../../features/user/view/emergency_help/waiting_for_rescuer_page.dart';
 import '../../features/user/view/main_page.dart';
+import '../../features/user/view/profile/edit_personal_info_page.dart';
 import 'error_routes.dart';
 
 class AppRoutes {
@@ -88,7 +89,17 @@ class AppRoutes {
             );
           }
       ),
-
+      GoRoute(
+          name: AppRoute.editPersonalInfoPage,
+          path: '/editPersonalInfo-page',
+          pageBuilder: (context, state) {
+            return buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child:  EditPersonalInfoPage(),
+            );
+          }
+      ),
 
 
       ///Rescuer  Routes
@@ -149,4 +160,6 @@ class AppRoute {
   static const String emergencyRequestHelpPage = 'emergencyRequest-help';
   static const String waitingForRescuerPage = 'waitingRescuer_response';
   static const String personalInfoPage = 'personalInfo-page';
+  static const String editPersonalInfoPage = 'editPersonalInfo-page';
+
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_icon.dart';
 import '../../../../core/constants/app_image.dart';
@@ -26,12 +27,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
           ),
           actions: [
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push("/editPersonalInfo-page");
+                },
                 child: Text(
                   "Edit",
                   style: textTheme(context).bodyLarge?.copyWith(
                       color: colorScheme(context).primary,
-                      decoration: TextDecoration.underline),
+                      decoration: TextDecoration.underline,
+                      decorationColor: colorScheme(context).primary),
                 ))
           ],
         ),
@@ -39,41 +43,24 @@ class _PersonalInfoState extends State<PersonalInfo> {
             padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center ,
               children: [
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Center(
-                      child: CircleAvatar(
-                        radius: 63,
-                        backgroundColor: colorScheme(context)
-                            .onSurface
-                            .withValues(alpha: 0.1),
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundColor: colorScheme(context).surface,
-                          backgroundImage: AssetImage(
-                            AppImage.profileImage,
-                          ),
-                        ),
-                      ),
+                CircleAvatar(
+                  radius: 63,
+                  backgroundColor: colorScheme(context)
+                      .onSurface
+                      .withValues(alpha: 0.1),
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: colorScheme(context).surface,
+                    backgroundImage: AssetImage(
+                      AppImage.profileImage,
                     ),
-                    Positioned(
-                        bottom: 10,
-                        right: 100,
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.white,
-                          child: SvgPicture.asset(
-                            AppIcon.editIcon,
-                            width: 16,
-                            height: 16,
-                          ),
-                        )),
-                  ],
+                  ),
                 ),
+
                 SizedBox(
-                  height: 0,
+                  height: 10,
                 ),
                 CustomListTileWidget(
                   title: 'Full Name',
@@ -84,6 +71,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   title: 'CNIC / ID Number',
                   svgIcon: AppIcon.cnicIcon,
                   subtitle: "31202-6608846-8",
+                ),
+                CustomListTileWidget(
+                  title: 'Phone Number',
+                  svgIcon: AppIcon.callIcon,
+                  subtitle: "408-841-0926",
                 ),
               ],
             )));

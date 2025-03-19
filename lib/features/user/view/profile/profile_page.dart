@@ -41,39 +41,22 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center ,
               children: [
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Center(
-                      child: CircleAvatar(
-                        radius: 63,
-                        backgroundColor: colorScheme(context)
-                            .onSurface
-                            .withValues(alpha: 0.1),
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundColor: colorScheme(context).surface,
-                          backgroundImage: AssetImage(
-                            AppImage.profileImage,
-                          ),
-                        ),
-                      ),
+                CircleAvatar(
+                  radius: 63,
+                  backgroundColor: colorScheme(context)
+                      .onSurface
+                      .withValues(alpha: 0.1),
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: colorScheme(context).surface,
+                    backgroundImage: AssetImage(
+                      AppImage.profileImage,
                     ),
-                    Positioned(
-                        bottom: 10,
-                        right: 100,
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.white,
-                          child: SvgPicture.asset(
-                            AppIcon.editIcon,
-                            width: 16,
-                            height: 16,
-                          ),
-                        )),
-                  ],
+                  ),
                 ),
+
                 SizedBox(
                   height: 15,
                 ),

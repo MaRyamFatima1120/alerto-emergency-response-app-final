@@ -24,26 +24,29 @@ class CustomListTileWidget extends StatelessWidget {
           backgroundColor: colorScheme(context).surface,
           child: SvgPicture.asset(
             svgIcon,
-            width: 24,
-            height: 24,
+            width: 20,
+            height: 20,
           )),
       title: Text(
         title,
-        style: textTheme(context).bodyMedium,
+        style: textTheme(context).bodyMedium?.copyWith(
+          fontWeight: FontWeight.w600
+        ),
+       /* textAlign: subtitle == null ? TextAlign.start : TextAlign.start,*/
       ),
       subtitle: subtitle != null
           ? Text(
         subtitle!,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Colors.grey[700],
+          color: colorScheme(context).onSurface.withValues(alpha: 0.8),
         ),
       )
           : null, // No subtitle if null
       trailing: rightIcon != null
           ? SvgPicture.asset(
         rightIcon!,
-        width: 16,
-        height: 16,
+        width: 24,
+        height: 24,
       )
           : null,
       onTap: onTap,
