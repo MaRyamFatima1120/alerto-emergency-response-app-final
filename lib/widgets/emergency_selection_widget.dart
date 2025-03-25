@@ -1,4 +1,5 @@
 import 'package:alerto_emergency_response_app/widgets/rounded_button.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../core/constants/app_icon.dart';
 import '../core/routes/go_routes.dart';
 import '../core/utils/global_variable.dart';
+import '../core/utils/snackbar_helper.dart';
 import '../features/user/provider/emergency_request_provider.dart';
 
 class EmergencySelectionWidget extends StatelessWidget {
@@ -76,6 +78,26 @@ class EmergencySelectionWidget extends StatelessWidget {
         ),
         CustomButton(
           pressed: () {
+            if (emergencyProvider.selectedEmergency == null || emergencyProvider.selectedEmergency!.isEmpty){
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              final snackBar = SnackBar(
+                elevation: 0,
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.transparent,
+                content: AwesomeSnackbarContent(
+                  title: 'Alert!',
+                  message:
+                  "Please Select Type.It's Compulsory",
+                  contentType: ContentType.help,
+                ),
+              );
+
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(snackBar);
+              return;
+
+            }
             GoRouter.of(context).pushNamed(
               AppRoute.emergencyRequestHelpPage,
               extra: emergencyProvider.selectedEmergency,
