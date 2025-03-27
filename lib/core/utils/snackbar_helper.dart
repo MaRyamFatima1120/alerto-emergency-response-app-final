@@ -1,26 +1,43 @@
 import 'package:alerto_emergency_response_app/core/utils/global_variable.dart';
 import 'package:flutter/material.dart';
 
-class SnackbarHelper {
-  static void showAnimatedSnackBar(BuildContext context, String message, ) {
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
+class CustomSnackBar {
+  static void show(
+    BuildContext context, {
+    required String message,
+    IconData? icon,
+    Color? bgColor,
+    Color? textColor,
+    Duration duration = const Duration(seconds: 3),
+  }) {
 
+    // Ensure the context is valid before showing the SnackBar
+    if (!context.mounted) return;
     final snackBar = SnackBar(
-      content: Text(
-        message,
-        style:textTheme(context).bodyMedium
+      content: Row(
+        children: [
+          Icon(
+            icon ?? Icons.error_outline, // Default icon
+            color: textColor ?? Colors.white,
+            size: 35.0,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              message,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: textColor ?? colorScheme(context).surface,
+                  fontWeight: FontWeight.w500),
+            ),
+          ),
+        ],
       ),
+      backgroundColor: bgColor ?? colorScheme(context).error,
+      dismissDirection: DismissDirection.up,
       behavior: SnackBarBehavior.floating,
-      backgroundColor: colorScheme(context).surface,
-      width: double.infinity,
-
-      duration: const Duration(seconds: 2),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      duration: duration,
     );
 
-    scaffoldMessenger.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

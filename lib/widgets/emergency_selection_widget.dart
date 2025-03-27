@@ -1,14 +1,12 @@
+import 'package:alerto_emergency_response_app/core/utils/snackbar_helper.dart';
 import 'package:alerto_emergency_response_app/widgets/rounded_button.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
 import '../core/constants/app_icon.dart';
-import '../core/routes/go_routes.dart';
 import '../core/utils/global_variable.dart';
-import '../core/utils/snackbar_helper.dart';
+import '../core/utils/location_helper.dart';
 import '../features/user/provider/emergency_request_provider.dart';
 
 class EmergencySelectionWidget extends StatelessWidget {
@@ -17,7 +15,7 @@ class EmergencySelectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final emergencyProvider = Provider.of<EmergencyRequestProvider>(context);
-    final List<Map<String, dynamic>> emergencyType = [
+    final List<Map<String?, dynamic>> emergencyType = [
       {
         "title": "Medical Emergency",
         "icon": AppIcon.medicalIcon,
@@ -52,14 +50,13 @@ class EmergencySelectionWidget extends StatelessWidget {
             itemCount: emergencyType.length,
             itemBuilder: (context, index) {
               final requestType = emergencyType[index];
-              final isSelected = emergencyProvider.selectedEmergency ==
-                  requestType['title'];
+              final isSelected =
+                  emergencyProvider.selectedEmergency == requestType['title'];
 
               return GestureDetector(
                 onTap: () {
                   //store title
-                  emergencyProvider
-                      .selectEmergency(requestType['title']!);
+                  emergencyProvider.selectEmergency(requestType['title']!);
                   print(requestType['title']);
                 },
                 child: EmergencyCard(
@@ -78,30 +75,20 @@ class EmergencySelectionWidget extends StatelessWidget {
         ),
         CustomButton(
           pressed: () {
-            if (emergencyProvider.selectedEmergency == null || emergencyProvider.selectedEmergency!.isEmpty){
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              final snackBar = SnackBar(
-                elevation: 0,
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.transparent,
-                content: AwesomeSnackbarContent(
-                  title: 'Alert!',
-                  message:
-                  "Please Select Type.It's Compulsory",
-                  contentType: ContentType.help,
-                ),
-              );
+            if (emergencyProvider.selectedEmergency == null ||
+                emergencyProvider.selectedEmergency!.isEmpty) {
+              CustomSnackBar.show(context,
+                  message: "Please select an emergency type before proceeding.",
+                  duration: Duration(seconds: 2));
 
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(snackBar);
-              return;
-
+              return; // Stop execution if no selection
             }
-            GoRouter.of(context).pushNamed(
+            _getLocationAndMove(context);
+
+            /*GoRouter.of(context).pushNamed(
               AppRoute.emergencyRequestHelpPage,
               extra: emergencyProvider.selectedEmergency,
-            );
+            );*/
           },
           width: double.infinity,
           height: 60,
@@ -111,7 +98,58 @@ class EmergencySelectionWidget extends StatelessWidget {
       ],
     );
   }
+
+  // Function to fetch user location and update map
+  Future<void> _getLocationAndMove(BuildContext context) async {
+    final emergencyProvider =
+        Provider.of<EmergencyRequestProvider>(context, listen: false);
+    String? selectedEmergencyType = emergencyProvider.selectedEmergency;
+    try {
+      var position = await LocationUtils.getUserCurrentLocation();
+
+      // Navigate to next screen with fetched location
+
+      print(position.latitude);
+      print(position.longitude);
+
+      context.push('/emergencyRequest-help', extra: {
+        'latitude': position.latitude,
+        'longitude': position.longitude,
+        'selectedEmergency': selectedEmergencyType,
+      });
+    } catch (e) {
+      print("Error: $e");
+      CustomSnackBar.show(
+        context,
+        message: "Failed to get location: $e",
+      );
+    }
+  }
+
+/* void _showLocationRequirementDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Force user to respond
+      builder: (context) {
+        return AlertDialog(
+          title: Center(child: Text("Location Access Required",style: textTheme(context).headlineLarge,)),
+          content: Text(
+              "To respond to your emergency, we need your location. Please enable location access.",style: textTheme(context).bodyMedium,),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                _getLocationAndMove(context);
+              },
+              child: Text("Continue"),
+            ),
+          ],
+        );
+      },
+    );
+  }*/
 }
+
 class EmergencyCard extends StatelessWidget {
   final String title;
   final String iconPath;
@@ -119,9 +157,9 @@ class EmergencyCard extends StatelessWidget {
 
   const EmergencyCard(
       {super.key,
-        required this.title,
-        required this.iconPath,
-        required this.isSelected});
+      required this.title,
+      required this.iconPath,
+      required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -157,8 +195,8 @@ class EmergencyCard extends StatelessWidget {
                     color: isSelected
                         ? colorScheme(context).surface
                         : colorScheme(context)
-                        .onSurface
-                        .withValues(alpha: 0.8)),
+                            .onSurface
+                            .withValues(alpha: 0.8)),
               ),
             ],
           ),

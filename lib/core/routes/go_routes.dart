@@ -11,6 +11,7 @@ import '../../features/user/view/emergency_help/emergency_request_help_step2.dar
 import '../../features/user/view/emergency_help/emergency_request_page.dart';
 import '../../features/user/view/emergency_help/waiting_for_rescuer_page.dart';
 import '../../features/user/view/main_page.dart';
+import '../../features/user/view/map/user_map_screen.dart';
 import '../../features/user/view/profile/edit_personal_info_page.dart';
 import 'error_routes.dart';
 
@@ -54,18 +55,19 @@ class AppRoutes {
         ),
       ),
       GoRoute(
-        name: AppRoute.emergencyRequestHelpPage,
-        path: '/emergencyRequest-help',
-
-        pageBuilder: (context, state) {
-          final emergencyType =state.extra as String? ?? 'Unknown Type';
-          return buildPageWithDefaultTransition<void>(
-            context: context,
-            state: state,
-            child:  EmergencyRequestHelpStep2(emergencyType: emergencyType,),
-          );
-        }
-      ),
+          name: AppRoute.emergencyRequestHelpPage,
+          path: '/emergencyRequest-help',
+          pageBuilder: (context, state) {
+            final emergencyType = state.extra as Map<String, dynamic>;
+            return buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: EmergencyRequestHelpStep2(
+                  latitude: emergencyType['latitude'],
+                  longitude: emergencyType['longitude'],
+                  emergencyType: emergencyType['selectedEmergency']),
+            );
+          }),
       GoRoute(
           name: AppRoute.waitingForRescuerPage,
           path: '/waitingRescuer_response',
@@ -73,10 +75,27 @@ class AppRoutes {
             return buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child:  WaitingForRescuerPage(),
+              child: WaitingForRescuerPage(),
             );
-          }
-      ),
+          }),
+
+      //User Map Page
+      GoRoute(
+          name: AppRoute.userMapPage,
+          path: '/userMap-page',
+          pageBuilder: (context, state) {
+            final data = state.extra as Map<String, dynamic>;
+            return buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: UserMapPage(
+                latitude: data['latitude'] ?? 0.0,
+                longitude: data['longitude'] ?? 0.0,
+                emergencyType: data['selectedEmergency'] ?? "Unknown",
+                phone: data['phone'] ?? "No phone provided",
+                notes: data['notes'] ?? "No notes provided",
+            ));
+          }),
 
       GoRoute(
           name: AppRoute.personalInfoPage,
@@ -85,10 +104,9 @@ class AppRoutes {
             return buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child:  PersonalInfo(),
+              child: PersonalInfo(),
             );
-          }
-      ),
+          }),
       GoRoute(
           name: AppRoute.editPersonalInfoPage,
           path: '/editPersonalInfo-page',
@@ -96,11 +114,9 @@ class AppRoutes {
             return buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child:  EditPersonalInfoPage(),
+              child: EditPersonalInfoPage(),
             );
-          }
-      ),
-
+          }),
 
       ///Rescuer  Routes
 
@@ -154,6 +170,7 @@ class AppRoute {
   static const String loginPage = 'login-page';
   static const String profilePage = 'profile-page';
   static const String forgetPage = 'forget-page';
+
   ///User
   static const String mainPage = 'main-page';
   static const String emergencyRequestPage = 'emergencyRequest-page';
@@ -161,5 +178,5 @@ class AppRoute {
   static const String waitingForRescuerPage = 'waitingRescuer_response';
   static const String personalInfoPage = 'personalInfo-page';
   static const String editPersonalInfoPage = 'editPersonalInfo-page';
-
+  static const String userMapPage = 'userMap-page';
 }

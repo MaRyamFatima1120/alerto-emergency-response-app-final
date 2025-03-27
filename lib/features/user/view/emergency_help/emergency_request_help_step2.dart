@@ -6,9 +6,17 @@ import '../../../../widgets/custom_textform.dart';
 import '../../../../widgets/rounded_button.dart';
 
 class EmergencyRequestHelpStep2 extends StatefulWidget {
+  final double latitude;
+  final double longitude;
   final String emergencyType;
 
-  const EmergencyRequestHelpStep2({super.key, required this.emergencyType});
+  const EmergencyRequestHelpStep2(
+      {super.key,
+      required this.emergencyType,
+      required this.latitude,
+      required this.longitude});
+
+
 
   @override
   State<EmergencyRequestHelpStep2> createState() =>
@@ -20,6 +28,14 @@ class _EmergencyRequestHelpStep2State extends State<EmergencyRequestHelpStep2> {
   final phoneController = TextEditingController();
   final notesController = TextEditingController();
 
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    notesController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +110,16 @@ class _EmergencyRequestHelpStep2State extends State<EmergencyRequestHelpStep2> {
               CustomButton(
                 pressed: () {
                   if (_formKey.currentState!.validate()) {
-                    //context.push("/waitingRescuer_response");
+                    context.push(
+                      "/userMap-page",
+                      extra: {
+                        'latitude': widget.latitude,
+                        'longitude': widget.longitude,
+                        'selectedEmergency': widget.emergencyType,
+                        'phone': phoneController.text,
+                        'notes': notesController.text,
+                      },
+                    );
                   }
                 },
                 width: double.infinity,
