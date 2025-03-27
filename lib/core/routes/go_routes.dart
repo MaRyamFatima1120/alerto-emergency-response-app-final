@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 import '../../features/rescuer/view/authentication/profile_page.dart';
 import '../../features/user/view/emergency_help/emergency_request_help_step2.dart';
 import '../../features/user/view/emergency_help/emergency_request_page.dart';
-import '../../features/user/view/emergency_help/waiting_for_rescuer_page.dart';
 import '../../features/user/view/main_page.dart';
 import '../../features/user/view/map/user_map_screen.dart';
 import '../../features/user/view/profile/edit_personal_info_page.dart';
@@ -68,17 +67,6 @@ class AppRoutes {
                   emergencyType: emergencyType['selectedEmergency']),
             );
           }),
-      GoRoute(
-          name: AppRoute.waitingForRescuerPage,
-          path: '/waitingRescuer_response',
-          pageBuilder: (context, state) {
-            return buildPageWithDefaultTransition<void>(
-              context: context,
-              state: state,
-              child: WaitingForRescuerPage(),
-            );
-          }),
-
       //User Map Page
       GoRoute(
           name: AppRoute.userMapPage,

@@ -4,6 +4,9 @@ import '../../../../core/utils/global_variable.dart';
 import '../../../../core/utils/validation.dart';
 import '../../../../widgets/custom_textform.dart';
 import '../../../../widgets/rounded_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
+
 
 class EmergencyRequestHelpStep2 extends StatefulWidget {
   final double latitude;
@@ -27,6 +30,47 @@ class _EmergencyRequestHelpStep2State extends State<EmergencyRequestHelpStep2> {
   final _formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   final notesController = TextEditingController();
+
+
+  void saveEmergencyRequest() async {
+    if (_formKey.currentState!.validate()) {
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // Generate a unique request ID
+      String requestId = Uuid().v4();
+
+      // Get the user details
+      String phone = phoneController.text;
+      //String name = "Maryam"; // You can get this dynamically if needed
+
+      // New emergency request data
+      Map<String, dynamic> newRequest = {
+        "latitude": widget.latitude,
+        "longitude": widget.longitude,
+        "emergencyType": widget.emergencyType,
+        "notes": notesController.text,
+        "timestamp": FieldValue.serverTimestamp(),
+      };
+
+      // Reference to the user's document
+      DocumentReference userDoc = firestore.collection("emergency_requests").doc(phone);
+
+      // Update user data and add new request inside "requests"
+      await userDoc.set({
+       /* "name": name,*/
+        "phone": phone,
+      }, SetOptions(merge: true)); // Merge to avoid overwriting existing data
+
+      await userDoc.update({
+        "requests.$requestId": newRequest, // Store request under "requests"
+      }).then((_) {
+        print("Emergency Request Saved Successfully!");
+        context.push("/userMap-page", extra: newRequest);
+      }).catchError((error) {
+        print("Error saving request: $error");
+      });
+    }
+  }
 
 
   @override
@@ -109,18 +153,8 @@ class _EmergencyRequestHelpStep2State extends State<EmergencyRequestHelpStep2> {
               ),
               CustomButton(
                 pressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    context.push(
-                      "/userMap-page",
-                      extra: {
-                        'latitude': widget.latitude,
-                        'longitude': widget.longitude,
-                        'selectedEmergency': widget.emergencyType,
-                        'phone': phoneController.text,
-                        'notes': notesController.text,
-                      },
-                    );
-                  }
+
+                  saveEmergencyRequest();
                 },
                 width: double.infinity,
                 height: 60,
