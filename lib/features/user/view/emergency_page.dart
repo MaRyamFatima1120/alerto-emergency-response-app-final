@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/utils/global_variable.dart';
 import '../../../widgets/emergency_selection_widget.dart';
 

@@ -6,4 +6,5 @@ class AppImage {
   static const facebookImage = "assets/images/facebook.png";
   static const profileImage = "assets/images/profile.png";
   static const rescueLogo = "assets/images/rescueLogo.png";
+  static const userMarker ="assets/images/user_marker.png";
 }

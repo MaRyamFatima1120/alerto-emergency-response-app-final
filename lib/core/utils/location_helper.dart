@@ -1,7 +1,6 @@
 import 'dart:async';
-
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 class LocationUtils {
   /// Get the user's current location
@@ -36,31 +35,5 @@ class LocationUtils {
     return await Geolocator.getCurrentPosition();
   }
 
-  /// Load and update the user's location on the map
-  static Future<void> loadLocation(
-      Completer<GoogleMapController> controller, Function(List<Marker>) updateMarkers) async {
-    try {
-      Position position = await getUserCurrentLocation();
 
-      List<Marker> markers = [
-        Marker(
-          markerId: const MarkerId('user_location'),
-          position: LatLng(position.latitude, position.longitude),
-          infoWindow: const InfoWindow(title: "User"),
-        ),
-      ];
-
-      updateMarkers(markers);
-
-      CameraPosition cameraPosition = CameraPosition(
-        zoom: 14,
-        target: LatLng(position.latitude, position.longitude),
-      );
-
-      final GoogleMapController mapController = await controller.future;
-      mapController.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    } catch (e) {
-      print("Error loading location: $e");
-    }
-  }
 }

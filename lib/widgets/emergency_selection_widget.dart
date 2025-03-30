@@ -56,7 +56,7 @@ class EmergencySelectionWidget extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   //store title
-                  emergencyProvider.selectEmergency(requestType['title']!);
+                  emergencyProvider.selectEmergency(requestType['title']!,requestType['icon']!);
                   print(requestType['title']);
                 },
                 child: EmergencyCard(
@@ -85,10 +85,6 @@ class EmergencySelectionWidget extends StatelessWidget {
             }
             _getLocationAndMove(context);
 
-            /*GoRouter.of(context).pushNamed(
-              AppRoute.emergencyRequestHelpPage,
-              extra: emergencyProvider.selectedEmergency,
-            );*/
           },
           width: double.infinity,
           height: 60,
@@ -104,6 +100,7 @@ class EmergencySelectionWidget extends StatelessWidget {
     final emergencyProvider =
         Provider.of<EmergencyRequestProvider>(context, listen: false);
     String? selectedEmergencyType = emergencyProvider.selectedEmergency;
+    String? selectedEmergencyIcon= emergencyProvider.selectedEmergencyIcon;
     try {
       var position = await LocationUtils.getUserCurrentLocation();
 
@@ -111,11 +108,11 @@ class EmergencySelectionWidget extends StatelessWidget {
 
       print(position.latitude);
       print(position.longitude);
-
       context.push('/emergencyRequest-help', extra: {
         'latitude': position.latitude,
         'longitude': position.longitude,
         'selectedEmergency': selectedEmergencyType,
+        'selectedEmergencyIcon':selectedEmergencyIcon,
       });
     } catch (e) {
       print("Error: $e");
@@ -126,28 +123,7 @@ class EmergencySelectionWidget extends StatelessWidget {
     }
   }
 
-/* void _showLocationRequirementDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Force user to respond
-      builder: (context) {
-        return AlertDialog(
-          title: Center(child: Text("Location Access Required",style: textTheme(context).headlineLarge,)),
-          content: Text(
-              "To respond to your emergency, we need your location. Please enable location access.",style: textTheme(context).bodyMedium,),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                Navigator.pop(context);
-                _getLocationAndMove(context);
-              },
-              child: Text("Continue"),
-            ),
-          ],
-        );
-      },
-    );
-  }*/
+
 }
 
 class EmergencyCard extends StatelessWidget {

@@ -10,7 +10,7 @@ import '../../features/rescuer/view/authentication/profile_page.dart';
 import '../../features/user/view/emergency_help/emergency_request_help_step2.dart';
 import '../../features/user/view/emergency_help/emergency_request_page.dart';
 import '../../features/user/view/main_page.dart';
-import '../../features/user/view/map/user_map_screen.dart';
+import '../../features/user/view/map/user_map_page.dart';
 import '../../features/user/view/profile/edit_personal_info_page.dart';
 import 'error_routes.dart';
 
@@ -64,26 +64,26 @@ class AppRoutes {
               child: EmergencyRequestHelpStep2(
                   latitude: emergencyType['latitude'],
                   longitude: emergencyType['longitude'],
-                  emergencyType: emergencyType['selectedEmergency']),
+                  emergencyType: emergencyType['selectedEmergency'],
+                  emergencyIcon: emergencyType['selectedEmergencyIcon']
+              ),
             );
           }),
       //User Map Page
       GoRoute(
-          name: AppRoute.userMapPage,
-          path: '/userMap-page',
-          pageBuilder: (context, state) {
-            final data = state.extra as Map<String, dynamic>;
-            return buildPageWithDefaultTransition<void>(
-              context: context,
-              state: state,
-              child: UserMapPage(
-                latitude: data['latitude'] ?? 0.0,
-                longitude: data['longitude'] ?? 0.0,
-                emergencyType: data['selectedEmergency'] ?? "Unknown",
-                phone: data['phone'] ?? "No phone provided",
-                notes: data['notes'] ?? "No notes provided",
-            ));
-          }),
+        name: AppRoute.userMapPage,
+        path: '/userMap-page',
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final phone = extra['phone'] as String;
+          return buildPageWithDefaultTransition<void>(
+            context: context,
+            state: state,
+            child: UserMapPage(phone: phone),
+          );
+        },
+      ),
+
 
       GoRoute(
           name: AppRoute.personalInfoPage,
