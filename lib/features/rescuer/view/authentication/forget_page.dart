@@ -21,7 +21,7 @@ class _ForgetPageState extends State<ForgetPage> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
             onPressed: () {
-              context.pop();
+              context.pushNamed('/login');
             },
             icon: Icon(Icons.arrow_back)),
       ),
@@ -72,14 +72,16 @@ reset your password""",
                   style: textTheme(context).bodyMedium?.copyWith(
                       fontSize: 14,
                       color: colorScheme(context)
-                          .onSurface
+                          .surface
                           .withValues(alpha: 0.6)),
                 ),
                 TextSpan(
                     text: "Login",
                     style: textTheme(context).bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme(context).onSecondary),
+                        fontSize: 14,
+                        color: colorScheme(context)
+                            .primary
+                            .withValues(alpha: 0.6),),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         context.push("/login");

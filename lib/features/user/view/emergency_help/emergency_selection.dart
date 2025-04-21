@@ -1,13 +1,13 @@
 import 'package:alerto_emergency_response_app/core/utils/snackbar_helper.dart';
 import 'package:alerto_emergency_response_app/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../core/constants/app_icon.dart';
 import '../core/utils/global_variable.dart';
 import '../core/utils/location_helper.dart';
 import '../features/user/provider/emergency_request_provider.dart';
+import 'emergency_card_widget.dart';
 
 class EmergencySelectionWidget extends StatelessWidget {
   const EmergencySelectionWidget({super.key});
@@ -81,7 +81,7 @@ class EmergencySelectionWidget extends StatelessWidget {
                   message: "Please select an emergency type before proceeding.",
                   duration: Duration(seconds: 2));
 
-              return; // Stop execution if no selection
+              return;
             }
             _getLocationAndMove(context);
 
@@ -89,6 +89,7 @@ class EmergencySelectionWidget extends StatelessWidget {
           width: double.infinity,
           height: 60,
           bgColor: colorScheme(context).primary,
+          color: colorScheme(context).primary,
           child: Text("Next", style: textTheme(context).labelLarge),
         ),
       ],
@@ -126,58 +127,3 @@ class EmergencySelectionWidget extends StatelessWidget {
 
 }
 
-class EmergencyCard extends StatelessWidget {
-  final String title;
-  final String iconPath;
-  final bool isSelected;
-
-  const EmergencyCard(
-      {super.key,
-      required this.title,
-      required this.iconPath,
-      required this.isSelected});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: isSelected
-          ? colorScheme(context).primary
-          : colorScheme(context).surface,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-        child: SizedBox(
-          height: 130,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              // Icon
-              SvgPicture.asset(
-                iconPath, // SVG Path
-                width: 40,
-                height: 40,
-                colorFilter: ColorFilter.mode(
-                  isSelected
-                      ? colorScheme(context).surface
-                      : colorScheme(context).primary,
-                  BlendMode.srcIn,
-                ),
-              ),
-              //Title
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: textTheme(context).bodyMedium?.copyWith(
-                    color: isSelected
-                        ? colorScheme(context).surface
-                        : colorScheme(context)
-                            .onSurface
-                            .withValues(alpha: 0.8)),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
