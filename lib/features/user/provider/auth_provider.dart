@@ -1,8 +1,10 @@
+/*
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/utils/snackbar_helper.dart';
 import '../services/Auth_Services/firebase_auth_service.dart';
+
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseAuthService _firebaseAuthService = FirebaseAuthService();
@@ -81,3 +83,4 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
+*/

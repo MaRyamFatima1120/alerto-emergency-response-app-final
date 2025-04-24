@@ -8,7 +8,7 @@ class FirebaseAuthService {
 
   /// Register user with email and password
   Future<UserCredential?> register(
-      String email, String password, String phone) async {
+      String email, String password, String phone, String cnic,String name) async {
     try {
       // Create user with email and password
       UserCredential userCredential =
@@ -21,8 +21,9 @@ class FirebaseAuthService {
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'email': email,
         'phone': phone,
-        'fullName': '',
+        'name': name,
         'phoneNumber': phone,
+        'cnic':cnic,
         'createdAt': Timestamp.now(),
       });
 
@@ -34,12 +35,13 @@ class FirebaseAuthService {
   }
 
   // Update user profile (full name, phone number)
-  Future<void> updateUserProfile(String name, String phone) async {
+  Future<void> updateUserProfile(String name, String phone, String cnic) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await _firestore.collection('users').doc(user.uid).update({
         'fullName': name,
         'phoneNumber': phone,
+        'cnic':cnic
       });
     }
   }
