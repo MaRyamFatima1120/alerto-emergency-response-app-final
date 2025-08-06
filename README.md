@@ -105,14 +105,13 @@ But when I returned to university, my supervisor gave us a project idea — “B
 - Launch real-world production version 🚀  
 - Expand features: automated SOS, live call, multi-rescuer coordination, etc.  
 - Collaborate with local authorities, hospitals & emergency responders  
-- Open-source version for communities to adopt & adapt  
 - I want this app **to be used in real emergencies and save lives**  
 
 ---
 
 ## 🧑‍🎓 About Me
 
-Hi, I’m **Maryam F.**, a final year computer science student. Alerto is more than just a project — it’s my *voice, pain, strength, and dream* rolled into one. I hope this app brings hope to someone, somewhere.
+Hi, I’m **MaRyam F.**, a final year computer science student. Alerto is more than just a project — it’s my *voice, pain, strength, and dream* rolled into one. I hope this app brings hope to someone, somewhere.
 
 ---
 
@@ -129,7 +128,7 @@ Portfolio: [Soon]
 📄 License
 This project is not open-source.
 
-You may not use, copy, or distribute this code without written permission.
+You may not use, copy, or distribute this code without my permission.
 
 To license this project for personal or commercial use, please contact:
 
