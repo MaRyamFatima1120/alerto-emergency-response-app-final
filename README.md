@@ -31,8 +31,8 @@ But when I returned to university, my supervisor gave us a project idea — “B
 - Used **Firebase** for Authentication, Firestore, Storage & Cloud Messaging  
 - **Google Maps API** for live map tracking & route calculation  
 - Designed a **simple UI** with help from my sister, focused on clarity in stressful situations  
-- Chose the name *Alerto* with the help of a close friend  
-- Architecture, decisions, and guidance were supported by my university supervisor  
+- Chose the name *Alerto* 
+- Architecture, decisions, and guidance were supported by my supervisor  
 
 ---
 
