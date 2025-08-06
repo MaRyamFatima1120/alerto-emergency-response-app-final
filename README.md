@@ -68,7 +68,6 @@ But when I returned to university, my supervisor gave us a project idea — “B
 - Grief, when channeled into action, can become **purpose**  
 
 ---
-##  Demo Video
 
 ## 📽️ Demo Video
 
@@ -91,14 +90,6 @@ But when I returned to university, my supervisor gave us a project idea — “B
 ![11](https://github.com/user-attachments/assets/53ffb536-adc5-483a-9439-15155181d66e)
 ![12](https://github.com/user-attachments/assets/14e6443a-0bc3-4ee7-82cb-44f11f4fc9b4)
 ![13](https://github.com/user-attachments/assets/227715e8-bbaf-4fa9-9382-b8fd65b5ff59)
-
-
-
-
-
-
-
-
 
 
 
