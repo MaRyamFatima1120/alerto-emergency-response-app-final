@@ -116,8 +116,24 @@ Hi, I’m **Maryam F.**, a final year computer science student. Alerto is more t
 
 ---
 
-## 📫 Contact
+ ## 🤝 Contributing
+If you'd like to suggest improvements or report issues, feel free to open an issue or pull request.
 
-- **Email:** maryamfatimanavtcc@gmail.com
+ ## 📧 Contact
+Developer: MaRyam F.
+
+Email: maryamfatimanavtcc@gmail.com
+
+Portfolio: [Soon]
+
+📄 License
+This project is not open-source.
+
+You may not use, copy, or distribute this code without written permission.
+
+To license this project for personal or commercial use, please contact:
+
+📧  maryamfatimanavtcc@gmail.com
+
 
 > *“If this app saves even one life, it’s worth everything.”*
